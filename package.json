@@ -1,6 +1,6 @@
 {
   "name": "ionic2-webpack2-starter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "build": "npm run clean && webpack",
@@ -11,31 +11,31 @@
     "serve": "webpack-dev-server --progress"
   },
   "dependencies": {
-    "@angular/common": "2.0.1",
-    "@angular/compiler": "2.0.1",
-    "@angular/compiler-cli": "0.6.3",
-    "@angular/core": "2.0.1",
-    "@angular/forms": "2.0.1",
-    "@angular/http": "2.0.1",
-    "@angular/platform-browser": "2.0.1",
-    "@angular/platform-browser-dynamic": "2.0.1",
-    "@angular/platform-server": "2.0.1",
+    "@angular/common": "2.1.1",
+    "@angular/compiler": "2.1.1",
+    "@angular/compiler-cli": "2.1.1",
+    "@angular/core": "2.1.1",
+    "@angular/forms": "2.1.1",
+    "@angular/http": "2.1.1",
+    "@angular/platform-browser": "2.1.1",
+    "@angular/platform-browser-dynamic": "2.1.1",
+    "@angular/platform-server": "2.1.1",
     "core-js": "2.4.1",
-    "ionic-angular": "2.0.0-rc.0",
+    "ionic-angular": "2.0.0-rc.1",
     "rxjs": "5.0.0-beta.12",
-    "zone.js": "0.6.25"
+    "zone.js": "0.6.26"
   },
   "devDependencies": {
     "@types/core-js": "0.9.34",
     "angular2-template-loader": "0.5.0",
     "copy-webpack-plugin": "3.0.1",
-    "cross-env": "3.0.0",
-    "html-webpack-plugin": "2.22.0",
+    "cross-env": "3.1.3",
+    "html-webpack-plugin": "2.24.0",
     "raw-loader": "0.5.1",
     "rimraf": "2.5.4",
-    "ts-loader": "0.8.2",
+    "ts-loader": "0.9.5",
     "typescript": "2.0.3",
     "webpack": "2.1.0-beta.25",
-    "webpack-dev-server": "2.1.0-beta.5"
+    "webpack-dev-server": "2.1.0-beta.9"
   }
 }
