@@ -1,13 +1,11 @@
 {
   "name": "ionic2-webpack2-starter",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "build": "npm run clean && webpack",
-    "build:prod": "npm run clean && npm run codegen && cross-env TARGET=prod webpack -p",
+    "build:prod": "npm run clean && cross-env APP_ENVIRONMENT=production webpack -p",
     "clean": "rimraf dist",
-    "codegen": "ngc && rimraf 'src/*.js' 'src/**/*.js'",
-    "postinstall": "npm run codegen",
     "serve": "webpack-dev-server --progress"
   },
   "dependencies": {
@@ -26,6 +24,7 @@
     "zone.js": "0.6.26"
   },
   "devDependencies": {
+    "@ngtools/webpack": "1.1.2",
     "@types/core-js": "0.9.34",
     "angular2-template-loader": "0.5.0",
     "copy-webpack-plugin": "3.0.1",

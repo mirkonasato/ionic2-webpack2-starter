@@ -1,6 +1,6 @@
 # Ionic 2 Webpack Starter
 
-Experimental Ionic 2 starter project using Webpack 2.
+Simple Ionic 2 starter project using Webpack 2 and [@ngtools/webpack](https://github.com/angular/angular-cli/tree/master/packages/webpack) for AoT template compilation.
 
 Currently only works for a website (no Cordova support to build a mobile app) and with the default Ionic theme (no Sass support).
 

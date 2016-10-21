@@ -1,16 +1,15 @@
 var webpack = require('webpack');
+var ngToolsWebpack = require('@ngtools/webpack');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-var appEntry = './src/main-dev.ts';
-if (process.env.TARGET === 'prod') {
-  appEntry = './src/main-prod.ts';
-}
+var appEnvironment = process.env.APP_ENVIRONMENT || 'development';
+var isProduction = appEnvironment === 'production'; 
 
-module.exports = {
+var webpackConfig = {
 
   entry: {
-    'app': appEntry,
+    'app': './src/main.ts',
     'polyfills': [
       'core-js/es6',
       'core-js/es7/reflect',
@@ -23,11 +22,9 @@ module.exports = {
   },
   module: {
     loaders: [
-      {test: /\.component.ts$/, loader: 'ts!angular2-template'},
-      {test: /\.page.ts$/, loader: 'ts!angular2-template'},
-      {test: /\.ts$/, exclude: /\.(component|page).ts$/, loader: 'ts'},
-      {test: /\.html$/, loader: 'raw'},
-      {test: /\.css$/, loader: 'raw'}
+      { test: /\.ts$/, loader: isProduction ? '@ngtools/webpack' : 'ts!angular2-template' },
+      { test: /\.html$/, loader: 'raw' },
+      { test: /\.css$/, loader: 'raw' }
     ]
   },
   resolve: {
@@ -48,10 +45,24 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: 'node_modules/ionic-angular/css', to: 'css' },
       { from: 'node_modules/ionic-angular/fonts', to: 'fonts' }
-    ])
+    ]),
+    new webpack.DefinePlugin({
+      app: {
+        environment: JSON.stringify(appEnvironment)
+      }
+    })
   ],
-  devServer: {
-    stats: 'errors-only'
-  }
+  // devServer: {
+  //   stats: 'errors-only'
+  // }
 
 };
+
+if (isProduction) {
+  webpackConfig.plugins.push(new ngToolsWebpack.AotPlugin({
+    tsConfigPath: './tsconfig.json',
+    entryModule: './src/app/app.module#AppModule'
+  }));
+}
+
+module.exports = webpackConfig;
