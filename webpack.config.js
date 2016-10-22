@@ -49,10 +49,9 @@ var webpackConfig = {
     new HtmlWebpackPlugin({
       template: './src/index.html'
     }),
-    // new CopyWebpackPlugin([
-    //   { from: 'node_modules/ionic-angular/css', to: 'css' },
-    //   { from: 'node_modules/ionic-angular/fonts', to: 'fonts' }
-    // ]),
+    new CopyWebpackPlugin([
+      { from: 'node_modules/ionicons/dist/fonts', to: 'fonts' }
+    ]),
     new webpack.DefinePlugin({
       app: {
         environment: JSON.stringify(appEnvironment)
@@ -65,7 +64,8 @@ var webpackConfig = {
         },
         sassLoader: {
           includePaths: [
-            __dirname + "/node_modules/ionic-angular"
+            __dirname + "/node_modules/ionic-angular",
+            __dirname + "/node_modules/ionicons/dist/scss"
           ]
         },
         postcss: [

@@ -14,3 +14,6 @@ $colors: (
 
 @import "themes/ionic.theme.default";
 @import "../ionic.components";
+
+$ionicons-font-path: "/fonts";
+@import "ionicons";
