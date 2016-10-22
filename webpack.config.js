@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var autoprefixer = require('autoprefixer');
 var ngToolsWebpack = require('@ngtools/webpack');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -26,7 +27,11 @@ var webpackConfig = {
       { test: /\.ts$/, loader: isProduction ? '@ngtools/webpack' : 'ts!angular2-template' },
       { test: /\.html$/, loader: 'raw' },
       { test: /\.css$/, loader: 'raw' },
-      { test: /\.scss$/, loader: ExtractTextPlugin.extract({ fallbackLoader: 'style', loader: ['css', 'sass'] }) }
+      { test: /\.scss$/, loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style',
+          loader: ['css', 'postcss', 'sass']
+        })
+      }
     ]
   },
   resolve: {
@@ -62,7 +67,19 @@ var webpackConfig = {
           includePaths: [
             __dirname + "/node_modules/ionic-angular"
           ]
-        }
+        },
+        postcss: [
+          autoprefixer({
+            browsers: [
+              'last 2 versions',
+              'iOS >= 8',
+              'Android >= 4.4',
+              'Explorer >= 11',
+              'ExplorerMobile >= 11'
+            ],
+            cascade: false
+          })
+        ]
       }
     }),
     new ExtractTextPlugin({ filename: '[name].[hash].css' })
