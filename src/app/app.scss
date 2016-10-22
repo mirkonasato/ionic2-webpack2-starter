@@ -1,4 +1,4 @@
-@import "themes/ionic.globals";
+@import "~ionic-angular/themes/ionic.globals";
 
 $text-color:        #000;
 $background-color:  #fff;
@@ -12,8 +12,8 @@ $colors: (
   favorite:   #69BB7B
 );
 
-@import "themes/ionic.theme.default";
-@import "../ionic.components";
+@import "~ionic-angular/themes/ionic.theme.default";
+@import "./ionic.components";
 
-$ionicons-font-path: "/fonts";
-@import "ionicons";
+$ionicons-font-path: "~ionicons/dist/fonts";
+@import "~ionicons/dist/scss/ionicons";

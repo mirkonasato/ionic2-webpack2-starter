@@ -1,12 +1,18 @@
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var ngToolsWebpack = require('@ngtools/webpack');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var appEnvironment = process.env.APP_ENVIRONMENT || 'development';
 var isProduction = appEnvironment === 'production'; 
+
+var tsLoader = ['ts', 'angular2-template'];
+var scssLoader = ['style', 'css', 'postcss', 'sass'];
+if (isProduction) {
+  tsLoader = '@ngtools/webpack';
+  scssLoader = ExtractTextPlugin.extract({ fallbackLoader: 'style', loader: ['css', 'postcss', 'sass'] });
+}
 
 var webpackConfig = {
 
@@ -24,14 +30,11 @@ var webpackConfig = {
   },
   module: {
     loaders: [
-      { test: /\.ts$/, loader: isProduction ? '@ngtools/webpack' : 'ts!angular2-template' },
+      { test: /\.ts$/, loader: tsLoader },
       { test: /\.html$/, loader: 'raw' },
       { test: /\.css$/, loader: 'raw' },
-      { test: /\.scss$/, loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style',
-          loader: ['css', 'postcss', 'sass']
-        })
-      }
+      { test: /\.scss$/, loader: scssLoader },
+      { test: /\.(eot|svg|ttf|woff|woff2)(\?v=.*)?$/, loader: 'file?name=fonts/[name].[ext]' }
     ]
   },
   resolve: {
@@ -49,9 +52,6 @@ var webpackConfig = {
     new HtmlWebpackPlugin({
       template: './src/index.html'
     }),
-    new CopyWebpackPlugin([
-      { from: 'node_modules/ionicons/dist/fonts', to: 'fonts' }
-    ]),
     new webpack.DefinePlugin({
       app: {
         environment: JSON.stringify(appEnvironment)
@@ -62,27 +62,20 @@ var webpackConfig = {
         resolve: {
           // see https://github.com/TypeStrong/ts-loader/issues/283#issuecomment-249414784
         },
-        sassLoader: {
-          includePaths: [
-            __dirname + "/node_modules/ionic-angular",
-            __dirname + "/node_modules/ionicons/dist/scss"
-          ]
-        },
         postcss: [
           autoprefixer({
             browsers: [
               'last 2 versions',
               'iOS >= 8',
-              'Android >= 4.4',
-              'Explorer >= 11',
-              'ExplorerMobile >= 11'
+              'Android >= 4.4'
+              // 'Explorer >= 11',
+              // 'ExplorerMobile >= 11'
             ],
             cascade: false
           })
         ]
       }
-    }),
-    new ExtractTextPlugin({ filename: '[name].[hash].css' })
+    })
   ]
   // devServer: {
   //   stats: 'errors-only'
@@ -91,10 +84,15 @@ var webpackConfig = {
 };
 
 if (isProduction) {
-  webpackConfig.plugins.push(new ngToolsWebpack.AotPlugin({
-    tsConfigPath: './tsconfig.json',
-    entryModule: './src/app/app.module#AppModule'
-  }));
+  webpackConfig.plugins.push(
+    new ngToolsWebpack.AotPlugin({
+      tsConfigPath: './tsconfig.json',
+      entryModule: './src/app/app.module#AppModule'
+    }),
+    new ExtractTextPlugin({
+      filename: '[name].[hash].css'
+    })
+  );
 }
 
 module.exports = webpackConfig;
