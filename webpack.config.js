@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var ngToolsWebpack = require('@ngtools/webpack');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 var appEnvironment = process.env.APP_ENVIRONMENT || 'development';
 var isProduction = appEnvironment === 'production'; 
@@ -24,7 +25,8 @@ var webpackConfig = {
     loaders: [
       { test: /\.ts$/, loader: isProduction ? '@ngtools/webpack' : 'ts!angular2-template' },
       { test: /\.html$/, loader: 'raw' },
-      { test: /\.css$/, loader: 'raw' }
+      { test: /\.css$/, loader: 'raw' },
+      { test: /\.scss$/, loader: ExtractTextPlugin.extract({ fallbackLoader: 'style', loader: ['css', 'sass'] }) }
     ]
   },
   resolve: {
@@ -42,16 +44,29 @@ var webpackConfig = {
     new HtmlWebpackPlugin({
       template: './src/index.html'
     }),
-    new CopyWebpackPlugin([
-      { from: 'node_modules/ionic-angular/css', to: 'css' },
-      { from: 'node_modules/ionic-angular/fonts', to: 'fonts' }
-    ]),
+    // new CopyWebpackPlugin([
+    //   { from: 'node_modules/ionic-angular/css', to: 'css' },
+    //   { from: 'node_modules/ionic-angular/fonts', to: 'fonts' }
+    // ]),
     new webpack.DefinePlugin({
       app: {
         environment: JSON.stringify(appEnvironment)
       }
-    })
-  ],
+    }),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        resolve: {
+          // see https://github.com/TypeStrong/ts-loader/issues/283#issuecomment-249414784
+        },
+        sassLoader: {
+          includePaths: [
+            __dirname + "/node_modules/ionic-angular"
+          ]
+        }
+      }
+    }),
+    new ExtractTextPlugin({ filename: '[name].[hash].css' })
+  ]
   // devServer: {
   //   stats: 'errors-only'
   // }
