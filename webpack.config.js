@@ -32,13 +32,13 @@ var webpackConfig = {
     loaders: [
       { test: /\.ts$/, loader: tsLoader },
       { test: /\.html$/, loader: 'raw' },
-      { test: /\.css$/, loader: 'raw' },
-      { test: /\.scss$/, loader: scssLoader },
+      { test: /\.scss$/, exclude: __dirname + '/src/app', loader: scssLoader },
+      { test: /\.scss$/, include: __dirname + '/src/app', loader: ['raw', 'postcss', 'sass'] },
       { test: /\.(eot|svg|ttf|woff|woff2)(\?v=.*)?$/, loader: 'file?name=fonts/[name].[ext]' }
     ]
   },
   resolve: {
-    extensions: ['.js', '.ts', '.html', '.css']
+    extensions: ['.js', '.ts', '.html', '.scss']
   },
   plugins: [
     // see https://github.com/angular/angular/issues/11580
