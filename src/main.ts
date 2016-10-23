@@ -1,3 +1,4 @@
+import './theme/variables.scss';
 import './app/app.scss';
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
