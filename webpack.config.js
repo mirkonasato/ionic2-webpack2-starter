@@ -25,7 +25,7 @@ var webpackConfig = {
     ]
   },
   output: {
-    path: __dirname + '/dist',
+    path: __dirname + '/www',
     filename: '[name].[hash].js'
   },
   module: {

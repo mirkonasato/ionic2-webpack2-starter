@@ -1,6 +1,6 @@
-/dist/
 /node_modules/
 /typings/
+/www/
 /.idea/
 *.css.shim.ts
 *.ngfactory.ts
