@@ -1,12 +1,12 @@
 {
   "name": "ionic2-webpack2-starter",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "private": true,
   "scripts": {
-    "build": "npm run clean && webpack",
+    "build": "npm run clean && webpack -d",
     "build:prod": "npm run clean && cross-env APP_ENVIRONMENT=production webpack -p",
     "clean": "rimraf www",
-    "serve": "webpack-dev-server --progress"
+    "serve": "webpack-dev-server -d --progress"
   },
   "dependencies": {
     "@angular/common": "2.1.1",

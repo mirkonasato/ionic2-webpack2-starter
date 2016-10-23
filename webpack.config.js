@@ -1,3 +1,4 @@
+var path = require('path');
 var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 var ngToolsWebpack = require('@ngtools/webpack');
@@ -25,15 +26,15 @@ var webpackConfig = {
     ]
   },
   output: {
-    path: __dirname + '/www',
+    path: path.resolve('www'),
     filename: '[name].[hash].js'
   },
   module: {
     loaders: [
       { test: /\.ts$/, loader: tsLoader },
       { test: /\.html$/, loader: 'raw' },
-      { test: /\.scss$/, exclude: __dirname + '/src/app', loader: scssLoader },
-      { test: /\.scss$/, include: __dirname + '/src/app', loader: ['raw', 'postcss', 'sass'] },
+      { test: /\.scss$/, exclude: path.resolve('src/app'), loader: scssLoader },
+      { test: /\.scss$/, include: path.resolve('src/app'), loader: ['raw', 'postcss', 'sass'] },
       { test: /\.(eot|svg|ttf|woff|woff2)(\?v=.*)?$/, loader: 'file?name=fonts/[name].[ext]' }
     ]
   },
