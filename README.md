@@ -16,25 +16,25 @@ export class HomePage { }
 
 ### Create a Cordova project
 
-If you want to build a mobile app with Cordova clone this project
+If you want to build a mobile app with Cordova you can simply create a new Cordova project using this repository as the template:
 ```
-git clone https://github.com/mirkonasato/ionic2-webpack2-starter
-```
-then create a new Cordova project for your app using this project as the template:
-```
-cordova create myapp --template ./ionic2-webpack2-starter
-```
-Install all the dependencies (this only needs to be done once):
-```
-cd myapp
-npm install
+cordova create myapp --template https://github.com/mirkonasato/ionic2-webpack2-starter
 ```
 
 ### Create a web-only project
 
-If you want to create a mobile website and don't need Cordova you can simply cloned this project and use it as it is, or rename it to whatever you like.
+If you want to create a mobile website and don't need Cordova you can simply clone this project and use it as it is, or rename it to whatever you like.
+```
+git clone https://github.com/mirkonasato/ionic2-webpack2-starter myapp
+```
 
 ### NPM Tasks
+
+After creating or cloning the project you need to install all the dependencies (this only needs to be done once):
+```
+cd myapp
+npm install
+```
 
 To start a local development web server with livereload type:
 ```
