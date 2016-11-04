@@ -2,5 +2,4 @@
 /node_modules/
 /typings/
 /.idea/
-*.css.shim.ts
-*.ngfactory.ts
+/.vscode/
