@@ -8,11 +8,14 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var appEnvironment = process.env.APP_ENVIRONMENT || 'development';
 var isProduction = appEnvironment === 'production'; 
 
-var tsLoader = ['ts', 'angular2-template'];
-var scssLoader = ['style', 'css', 'postcss', 'sass'];
+var tsLoader = ['ts-loader', 'angular2-template-loader'];
+var scssLoader = ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'];
 if (isProduction) {
   tsLoader = '@ngtools/webpack';
-  scssLoader = ExtractTextPlugin.extract({ fallbackLoader: 'style', loader: ['css', 'postcss', 'sass'] });
+  scssLoader = ExtractTextPlugin.extract({
+    fallbackLoader: 'style-loader',
+    loader: ['css-loader', 'postcss-loader', 'sass-loader']
+  });
 }
 
 var webpackConfig = {
@@ -32,10 +35,10 @@ var webpackConfig = {
   module: {
     loaders: [
       { test: /\.ts$/, loader: tsLoader },
-      { test: /\.html$/, loader: 'raw' },
+      { test: /\.html$/, loader: 'raw-loader' },
       { test: /\.scss$/, exclude: path.resolve('src/app'), loader: scssLoader },
-      { test: /\.scss$/, include: path.resolve('src/app'), loader: ['raw', 'postcss', 'sass'] },
-      { test: /\.(eot|svg|ttf|woff|woff2)(\?v=.*)?$/, loader: 'file?name=fonts/[name].[ext]' }
+      { test: /\.scss$/, include: path.resolve('src/app'), loader: ['raw-loader', 'postcss-loader', 'sass-loader'] },
+      { test: /\.(eot|svg|ttf|woff|woff2)(\?v=.*)?$/, loader: 'file-loader?name=fonts/[name].[ext]' }
     ]
   },
   resolve: {
@@ -65,12 +68,13 @@ var webpackConfig = {
         },
         postcss: [
           autoprefixer({
+            // taken from https://github.com/driftyco/ionic-app-scripts/blob/master/config/sass.config.js
             browsers: [
               'last 2 versions',
               'iOS >= 8',
-              'Android >= 4.4'
-              // 'Explorer >= 11',
-              // 'ExplorerMobile >= 11'
+              'Android >= 4.4',
+              'Explorer >= 11',
+              'ExplorerMobile >= 11'
             ],
             cascade: false
           })
