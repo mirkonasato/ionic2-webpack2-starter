@@ -1,6 +1,6 @@
 {
   "name": "ionic2-webpack2-starter",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "private": true,
   "scripts": {
     "build": "npm run clean && webpack -d",
@@ -19,10 +19,10 @@
     "@angular/platform-browser-dynamic": "2.1.1",
     "@angular/platform-server": "2.1.1",
     "core-js": "2.4.1",
-    "ionic-angular": "2.0.0-rc.2",
+    "ionic-angular": "2.0.0-rc.3",
     "ionicons": "3.0.0",
     "rxjs": "5.0.0-beta.12",
-    "zone.js": "0.6.21"
+    "zone.js": "0.6.26"
   },
   "devDependencies": {
     "@ngtools/webpack": "1.1.2",
