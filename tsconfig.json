@@ -6,8 +6,9 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "sourceMap": true,
-    "types": [
-      "core-js"
+    "lib": [
+      "dom",
+      "es2015"
     ]
   },
   "compileOnSave": false,
