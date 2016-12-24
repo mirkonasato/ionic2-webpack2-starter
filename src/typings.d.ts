@@ -2,6 +2,7 @@
 declare function require(id: string): any;
 
 // set using the Webpack DefinePlugin
-declare var app: {
-  environment: string;
+declare var build: {
+  mode: string;
+  target: string;
 };

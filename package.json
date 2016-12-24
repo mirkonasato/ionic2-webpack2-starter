@@ -3,9 +3,10 @@
   "version": "0.3.4",
   "private": true,
   "scripts": {
-    "build": "npm run clean && webpack -d",
-    "build:prod": "npm run clean && cross-env APP_ENVIRONMENT=production webpack -p",
-    "clean": "rimraf www",
+    "build": "rimraf dist && webpack -d",
+    "build:prod": "rimraf dist && cross-env BUILD_MODE=prod webpack -p",
+    "build:cordova": "rimraf cordova/www && cross-env BUILD_TARGET=cordova webpack -d",
+    "build:cordova:prod": "rimraf cordova/www && cross-env BUILD_MODE=prod BUILD_TARGET=cordova webpack -p",    
     "serve": "webpack-dev-server -d --progress"
   },
   "dependencies": {

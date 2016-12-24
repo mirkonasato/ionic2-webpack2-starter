@@ -1,16 +1,21 @@
-var path = require('path');
-var webpack = require('webpack');
-var autoprefixer = require('autoprefixer');
-var ngToolsWebpack = require('@ngtools/webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const autoprefixer = require('autoprefixer');
+const ngToolsWebpack = require('@ngtools/webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-var appEnvironment = process.env.APP_ENVIRONMENT || 'development';
-var isProduction = appEnvironment === 'production'; 
+//
+// The following environment variables can be used to tweak the build:
+//  * BUILD_MODE: can be 'dev' or 'prod'; defaults to 'dev'
+//  * BUILD_TARGET: can be 'web' or 'cordova'; defaults to 'web'
+//
+const buildMode = process.env.BUILD_MODE || 'dev';
+const buildTarget = process.env.BUILD_TARGET || 'web';
 
-var tsLoader = ['ts-loader', 'angular2-template-loader'];
-var scssLoader = ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'];
-if (isProduction) {
+let tsLoader = ['ts-loader', 'angular2-template-loader'];
+let scssLoader = ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'];
+if (buildMode === 'prod') {
   tsLoader = '@ngtools/webpack';
   scssLoader = ExtractTextPlugin.extract({
     fallbackLoader: 'style-loader',
@@ -18,7 +23,12 @@ if (isProduction) {
   });
 }
 
-var webpackConfig = {
+let outputDir = 'dist';
+if (buildTarget === 'cordova') {
+  outputDir = 'cordova/www';
+}
+
+const webpackConfig = {
 
   entry: {
     'app': './src/main.ts',
@@ -29,7 +39,7 @@ var webpackConfig = {
     ]
   },
   output: {
-    path: path.resolve('www'),
+    path: path.resolve(outputDir),
     filename: '[name].[hash].js'
   },
   module: {
@@ -57,8 +67,9 @@ var webpackConfig = {
       template: './src/index.html'
     }),
     new webpack.DefinePlugin({
-      app: {
-        environment: JSON.stringify(appEnvironment)
+      build: {
+        mode: JSON.stringify(buildMode),
+        target: JSON.stringify(buildTarget)
       }
     }),
     new webpack.LoaderOptionsPlugin({
@@ -81,14 +92,14 @@ var webpackConfig = {
         ]
       }
     })
-  ]
-  // devServer: {
-  //   stats: 'errors-only'
-  // }
+  ],
+  devServer: {
+    stats: 'errors-only'
+  }
 
 };
 
-if (isProduction) {
+if (buildMode === 'prod') {
   webpackConfig.plugins.push(
     new ngToolsWebpack.AotPlugin({
       tsConfigPath: './tsconfig.json',

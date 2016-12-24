@@ -14,52 +14,63 @@ export class HomePage { }
 
 ## Usage
 
-### Create a Cordova project
+### Clone This Project
 
-If you want to build a mobile app with Cordova you can simply create a new Cordova project using this repository as the template:
+Simply clone this project and use it as it is, or rename it to whatever you like.
 ```
-cordova create myapp --template https://github.com/mirkonasato/ionic2-webpack2-starter
-```
-
-### Create a web-only project
-
-If you want to create a mobile website and don't need Cordova you can simply clone this project and use it as it is, or rename it to whatever you like.
-```
-git clone https://github.com/mirkonasato/ionic2-webpack2-starter myapp
+git clone https://github.com/mirkonasato/ionic2-webpack2-starter my-app
 ```
 
-### NPM Tasks
+### Install Dependencies
 
-After creating or cloning the project you need to install all the dependencies (this only needs to be done once):
+Install all the dependencies (this only needs to be done once) with NPM:
 ```
-cd myapp
+cd my-app
 npm install
 ```
+(You can also use [Yarn](https://yarnpkg.com/) instead of NPM of course.)
 
-To start a local development web server with livereload type:
+### Add Cordova
+
+If you only want to create a (progressive) web app you can skip this step. To be able to build a mobile app with Cordova, create a new Cordova project in a `cordova` sub-folder using the [Cordova CLI](https://cordova.apache.org/docs/en/latest/guide/cli/) (did I say Cordova enough times?):
+
+```
+cordova create cordova
+```
+
+then edit `cordova/config.xml` and set your app id, name, etc.
+
+### Local Development Server
+
+To start a local development web server with automatic refresh type:
 ```
 npm run serve
 ```
 Your application will be accessible at [localhost:8080](http://localhost:8080/) by default. See the [webpack-dev-server docs](https://webpack.github.io/docs/webpack-dev-server.html) if you want to customise anything.
 
-To package the app into the `www` folder do
-```
-npm run build
-```
-to build it with development settings, or
-```
-npm run build:prod
-```
-to enable production optimisations, like Angular Ahead-of-Time template compilation and code obfuscation/minification.
+### Build Targets
 
-### Run as a mobile app
+* `npm run build`: builds the project as a (progressive) web app inside the `dist` folder.
+* `npm run build:prod`: same as above but with production settings, i.e. it enables Angular production mode, Ahead-of-Time template compilation, and code obfuscation/minification.
+* `npm run build:cordova`: prepares the project for building a mobile app with Cordova. The output in this case is the `cordova/www` folder.
+* `npm run build:cordova:prod`: same as above but with production settings.
 
-If using Cordova you can then run what's in the `www` folder as as mobile app using the Cordova CLI. E.g. for Android first add the platform
+### Running as a Mobile App
+
+Simply build the project as described above, then use [Cordova CLI](https://cordova.apache.org/docs/en/latest/guide/cli/) from inside the `cordova` sub-folder to build and run.
+
+E.g. for Android build the project in the top-level folder
 ```
+npm run build:cordova
+```
+add Android as a platform (only needs to be done once):
+```
+cd cordova
 cordova platform add android
 ```
-then run the app in an emulator
+and then you run the app in an emulator with
 ```
 cordova run android --emulator
 ```
-Please refer to the [Cordova CLI docs](https://cordova.apache.org/docs/en/latest/guide/cli/) for more.
+
+For iOS it's the same, just replace `android` with `ios`. Please refer to the [Cordova CLI docs](https://cordova.apache.org/docs/en/latest/guide/cli/) for the full list of available commands.

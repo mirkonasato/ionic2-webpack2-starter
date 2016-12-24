@@ -8,12 +8,12 @@ function bootstrap() {
   platformBrowserDynamic().bootstrapModule(AppModule);
 }
 
-console.info('app.environment:', app.environment);
-if (app.environment === 'production') {
+console.info(`build info: target=${build.target} mode=${build.mode}`);
+if (build.mode === 'prod') {
   enableProdMode();
 }
 
-if (window['cordova']) {
+if (build.target === 'cordova') {
   document.addEventListener('deviceready', () => bootstrap());
 } else {
   bootstrap();
