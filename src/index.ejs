@@ -7,7 +7,9 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="theme-color" content="#4e8ef7">
+    <% if (htmlWebpackPlugin.options.buildTarget === 'cordova') { %>
     <script src="cordova.js"></script>
+    <% } %>
   </head>
   <body>
 

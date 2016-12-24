@@ -64,7 +64,8 @@ const webpackConfig = {
       name: 'polyfills'
     }),
     new HtmlWebpackPlugin({
-      template: './src/index.html'
+      template: './src/index.ejs',
+      buildTarget: buildTarget
     }),
     new webpack.DefinePlugin({
       build: {
