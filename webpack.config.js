@@ -5,7 +5,7 @@ const ngToolsWebpack = require('@ngtools/webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-function createWebpackConfig(env) {
+function createWebpackConfig(env={}) {
   //
   // The following environment variables can be used to tweak the build:
   //  * BUILD_MODE: can be 'dev' or 'prod'; defaults to 'dev'
