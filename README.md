@@ -2,15 +2,18 @@
 
 Ionic 2 starter project using Webpack 2 and [@ngtools/webpack](https://github.com/angular/angular-cli/tree/master/packages/webpack) for AoT template compilation.
 
-Includes Sass support for [theming your app](https://ionicframework.com/docs/v2/theming/theming-your-app/). Styles can be encapsulated in the component, without the need for a `selector` metadata property like in projects generated with the Ionic CLI.
+Includes Sass support for [theming your app](https://ionicframework.com/docs/v2/theming/theming-your-app/).
 
-```typescript
-@Component({
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss']
-})
-export class HomePage { }
-```
+## Motivation
+
+The [Ionic CLI](http://ionicframework.com/docs/cli/) is the officially supported tool for creating and managing Ionic projects. So why use a custom project workflow instead? Here are my reasons:
+
+* Isolate the project from possible breaking changes in the [Ionic CLI](https://github.com/driftyco/ionic-cli) and related moving parts, i.e. [ionic-app-scripts](https://github.com/driftyco/ionic-app-scripts), [ionic2-app-base](https://github.com/driftyco/ionic2-app-base), etc.
+* Build as a web app or a Cordova mobile app, with slightly different settings. E.g. `cordova.js` should not be included when deploying to a web server.
+* Encapsulate styles in components the Angular way, i.e. using `styleUrls`, instead of requiring Sass rules to match the component `selector`.
+* Follow the Angular [style guide](https://angular.io/styleguide#!#02-02) convention for file naming.
+
+In other words, have full control over the build process.
 
 ## Usage
 
@@ -50,10 +53,10 @@ Your application will be accessible at [localhost:8080](http://localhost:8080/) 
 
 ### Build Targets
 
-* `npm run build`: builds the project as a (progressive) web app inside the `dist` folder.
-* `npm run build:prod`: same as above but with production settings, i.e. it enables Angular production mode, Ahead-of-Time template compilation, and code obfuscation/minification.
-* `npm run build:cordova`: prepares the project for building a mobile app with Cordova. The output in this case is the `cordova/www` folder.
-* `npm run build:cordova:prod`: same as above but with production settings.
+* `npm run build` - builds the project as a (progressive) web app inside the `dist` folder.
+* `npm run build:prod` - same as above but with production settings, i.e. it enables Angular production mode, Ahead-of-Time template compilation, and code obfuscation/minification.
+* `npm run build:cordova` - prepares the project for building a mobile app with Cordova. The output in this case is the `cordova/www` folder.
+* `npm run build:cordova:prod` - same as above but with production settings.
 
 ### Running as a Mobile App
 
