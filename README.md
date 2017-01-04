@@ -73,7 +73,22 @@ cordova platform add android
 ```
 and then you run the app in an emulator with
 ```
-cordova run android --emulator
+cordova emulate android
 ```
 
 For iOS it's the same, just replace `android` with `ios`. Please refer to the [Cordova CLI docs](https://cordova.apache.org/docs/en/latest/guide/cli/) for the full list of available commands.
+
+### LiveReload in Android/iOS
+
+To automatically reload the app at every change while running it in Android/iOS launch
+```
+npm run serve:cordova
+```
+this will start the dev server and create a special build in `cordova/www` with `index.html` set to load scripts from the dev server, using your machine external IP address.
+
+In another terminal deploy the app to Android/iOS as usual with e.g.
+```
+ionic emulate android
+```
+
+You can even deploy to multiple devices and they will all live reload any changes.

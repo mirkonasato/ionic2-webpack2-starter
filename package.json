@@ -7,7 +7,8 @@
     "build:prod": "rimraf dist && webpack -p --env.BUILD_MODE=prod",
     "build:cordova": "rimraf cordova/www && webpack -d --env.BUILD_TARGET=cordova",
     "build:cordova:prod": "rimraf cordova/www && webpack -p --env.BUILD_MODE=prod --env.BUILD_TARGET=cordova",
-    "serve": "webpack-dev-server -d --progress"
+    "serve": "webpack-dev-server -d",
+    "serve:cordova": "rimraf cordova/www && webpack -d --env.BUILD_TARGET=cordova --env.LIVE_RELOAD=true && webpack-dev-server -d --env.BUILD_TARGET=cordova --env.LIVE_RELOAD=true"
   },
   "dependencies": {
     "@angular/common": "2.2.1",

@@ -5,6 +5,19 @@ const ngToolsWebpack = require('@ngtools/webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+function findExternalIpAddress() {
+  const os = require('os');
+  const ifaces = os.networkInterfaces();
+  for (let name of Object.keys(ifaces)) {
+    for (let iface of ifaces[name]) {
+      if (iface.family === 'IPv4' && !iface.internal) {
+        return iface.address;
+      }
+    }
+  }
+  throw new Error('Could not find the external IP address of this machine');
+}
+
 function createWebpackConfig(env={}) {
   //
   // The following environment variables can be used to tweak the build:
@@ -13,9 +26,12 @@ function createWebpackConfig(env={}) {
   //
   const buildMode = env.BUILD_MODE || 'dev';
   const buildTarget = env.BUILD_TARGET || 'web';
+  const liveReload = env.LIVE_RELOAD || false;
 
+  // defaults for buildMode === 'dev'
   let tsLoader = ['ts-loader', 'angular2-template-loader'];
   let scssLoader = ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'];
+  
   if (buildMode === 'prod') {
     tsLoader = '@ngtools/webpack';
     scssLoader = ExtractTextPlugin.extract({
@@ -24,9 +40,16 @@ function createWebpackConfig(env={}) {
     });
   }
 
+  // defaults for buildTarget === 'web'
   let outputDir = 'dist';
+
   if (buildTarget === 'cordova') {
     outputDir = 'cordova/www';
+  }
+
+  let serverAddress = '';
+  if (liveReload) {
+    serverAddress = findExternalIpAddress() + ':8080';
   }
 
   const webpackConfig = {
@@ -41,7 +64,7 @@ function createWebpackConfig(env={}) {
     },
     output: {
       path: path.resolve(outputDir),
-      filename: '[name].[hash].js'
+      filename: buildMode === 'prod' ? '[name].[hash].js' : '[name].js'
     },
     module: {
       loaders: [
@@ -65,8 +88,10 @@ function createWebpackConfig(env={}) {
         name: 'polyfills'
       }),
       new HtmlWebpackPlugin({
-        template: './src/index.ejs',
-        buildTarget: buildTarget
+        inject: buildMode === 'prod',
+        template: './src/index-' + buildMode + '.ejs',
+        buildTarget: buildTarget,
+        serverAddress: liveReload ? `http://${serverAddress}/` : ''
       }),
       new webpack.DefinePlugin({
         build: {
@@ -96,6 +121,8 @@ function createWebpackConfig(env={}) {
       })
     ],
     devServer: {
+      host: '0.0.0.0',
+      public: liveReload ? serverAddress : '',
       stats: 'errors-only'
     }
 
@@ -108,7 +135,7 @@ function createWebpackConfig(env={}) {
         entryModule: './src/app/app.module#AppModule'
       }),
       new ExtractTextPlugin({
-        filename: '[name].[hash].css'
+        filename: buildMode === 'prod' ? '[name].[hash].css' : '[name].css'
       })
     );
   }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title>Ionic App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="theme-color" content="#4e8ef7">
+    <% if (htmlWebpackPlugin.options.buildTarget === 'cordova') { %>
+    <script src="cordova.js"></script>
+    <% } %>
+  </head>
+  <body>
+
+    <ion-app></ion-app>
+
+    <script type="text/javascript" src="<%= htmlWebpackPlugin.options.serverAddress %>polyfills.js"></script>
+    <script type="text/javascript" src="<%= htmlWebpackPlugin.options.serverAddress %>app.js"></script>
+  </body>
+</html>
