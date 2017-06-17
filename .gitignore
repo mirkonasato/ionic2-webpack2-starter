@@ -1,6 +1,7 @@
 /cordova/platforms/*/
 /cordova/plugins/*/
 /cordova/www/
+/cordova/*
 /dist/
 /node_modules/
 /typings/
